@@ -72,7 +72,11 @@ any) => {
           </button>
         ) : null}
         <CopyToClipboard
-          text={[window.location.href, "shared=true"].join("&")}
+          text={(() => {
+            const shareUrl = new URL(window.location.href);
+            shareUrl.searchParams.set("shared", "true");
+            return shareUrl.toString();
+          })()}
           onCopy={() => toast("Copied to clipboard!")}
         >
           <button id="share" style={buttonStyle}>
